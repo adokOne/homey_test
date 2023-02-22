@@ -1,0 +1,47 @@
+<h1 class="h3 mb-3">
+  <strong>Users</strong>
+</h1>
+
+<div class="row">
+  <div class="col-12 col-lg-12 col-xxl-12 d-flex">
+    <div class="card flex-fill">
+      <table class="table table-hover my-0">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th class="d-none d-xl-table-cell">Created at</th>
+            <th class="d-none d-xl-table-cell">Projects count</th>
+            <th class="d-none d-md-table-cell">Comments count</th>
+            <th>Roles</th>
+            <th class="d-none d-md-table-cell">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @users.each do |user| %>
+            <tr>
+              <td><%= user.email %></td>
+              <td class="d-none d-xl-table-cell"><%= user.created_at.strftime('%F') %></td>
+              <td class="d-none d-xl-table-cell"><%= user.projects.count %></td>
+              <td class="d-none d-xl-table-cell"><%= user.comments.count %></td>
+              <td class="d-none d-md-table-cell"><%= user.roles.pluck(:name) %></td>
+              <td class="d-none d-md-table-cell">
+                <% if policy(:user).edit? %>
+                  <%= link_to 'Edit', edit_user_path(user), class: 'btn btn-warning'%>
+                <% end %>
+                <% if policy(:user).destroy? %>
+                  <%= link_to 'Destroy', user_path(user), data: { "turbo-method": :delete }, class: 'btn btn-danger'  %>
+                <% end %>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-12 col-lg-12 col-xxl-12 d-flex">
+    <%= paginate @users %>
+  </div>
+</div>

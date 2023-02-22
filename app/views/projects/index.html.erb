@@ -1,0 +1,53 @@
+<h1 class="h3 mb-3">
+  <strong>Projects</strong>
+</h1>
+
+<div class="row">
+  <div class="col-12 col-lg-12 col-xxl-12 d-flex">
+    <div class="card flex-fill">
+      <% if policy(:project).new? %>
+      <div class="card-header">
+        <%= link_to 'Add New', new_project_path, class: 'btn btn-primary'%>
+      </div>
+      <% end%>
+      <table class="table table-hover my-0">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th class="d-none d-xl-table-cell">Created at</th>
+            <th class="d-none d-xl-table-cell">Comments count</th>
+            <th>Status</th>
+            <th class="d-none d-md-table-cell">Author</th>
+            <th class="d-none d-md-table-cell">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @projects.each do |project| %>
+            <tr>
+              <td><%= project.name %></td>
+              <td class="d-none d-xl-table-cell"><%= project.created_at.strftime('%F') %></td>
+              <td class="d-none d-xl-table-cell"><%= project.comments.count %></td>
+              <td><span class="badge bg-<%= status_cls(project.status) %>"><%= project.status %></span></td>
+              <td class="d-none d-md-table-cell"><%= project.user.display_name %></td>
+              <td class="d-none d-md-table-cell">
+                <%= link_to 'Show', project_path(project), class: 'btn btn-success' %>
+                <% if policy(:project).edit? %>
+                  <%= link_to 'Edit', edit_project_path(project), class: 'btn btn-warning'%>
+                <% end %>
+                <% if policy(:project).destroy? %>
+                  <%= link_to 'Destroy', project_path(project), data: { "turbo-method": :delete }, class: 'btn btn-danger'  %>
+                <% end %>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-12 col-lg-12 col-xxl-12 d-flex">
+    <%= paginate @projects %>
+  </div>
+</div>

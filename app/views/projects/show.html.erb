@@ -1,0 +1,87 @@
+<h1 class="h3 mb-3">
+  <strong><%= @project.name %></strong>
+</h1>
+
+<% if @project.description.present? || policy(:project).change_status? %>
+<div class="row">
+  <div class="col-md-12 col-xl-12">
+    <div class="card">
+      <% if policy(:project).change_status?  %>
+      <div class="card-header">
+        <%= link_to 'Set created CREATED', change_status_project_path(@project, status: STATUS_CREATED), class: 'btn btn-primary', data: { "turbo-method": :post }%>
+        <%= link_to 'Set APPROVED status', change_status_project_path(@project, status: STATUS_APPROVED), class: 'btn btn-success', data: { "turbo-method": :post }%>
+        <%= link_to 'Set IN_PROGRESS status', change_status_project_path(@project, status: STATUS_IN_PROGRESS), class: 'btn btn-warning', data: { "turbo-method": :post }%>
+        <%= link_to 'Set COMPLETED status', change_status_project_path(@project, status: STATUS_COMPLETED), class: 'btn btn-danger', data: { "turbo-method": :post }%>
+      </div>
+      <% end %>
+      <% if @project.description.present? %>
+      <div class="card-body h-100">
+        <%= @project.description %>
+      </div>
+      <% end %>
+    </div>
+  </div>
+</div>
+<%  end%>
+<div class="row">
+  <div class="col-md-12 col-xl-12">
+    <%= render partial: 'comment_form', locals: { project: @project, comment: @project.comments.new } %>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-md-12 col-xl-12">
+    <div class="card">
+      <div class="card-header">
+        <h5 class="card-title mb-0">Activities</h5>
+      </div>
+      <div class="card-body h-100">
+        <% @project.activities.each do |activity| %>
+          <div class="d-flex align-items-start">
+            <div class="flex-grow-1">
+              <strong><%= activity.activitiable.user.display_name%></strong><br />
+              <small class="text-muted"><%= activity.created_at.strftime('%F %H:%I')%></small><br />
+              <% if activity.comment? && policy(:comment).destroy? %>
+              <%= link_to 'Delete', project_comment_path(@project, activity.activitiable), data: { "turbo-method": :delete }, class: 'btn btn-danger' %>
+              <% end %>
+            </div>
+            <% if activity.comment? %>
+            <div class="d-flex align-items-start mt-1">
+              <div class="flex-grow-1">
+                <div class="border text-sm text-muted p-2 mt-1">
+                  <%= activity.activitiable.text %>
+                </div>
+              </div>
+            </div>
+            <% else %>
+            <div class="d-flex align-items-start mt-1">
+              <div class="flex-grow-1">
+                <div class="border text-sm text-muted p-2 mt-1 btn btn-<%= status_cls(activity.activitiable.status) %>">
+                  Status was changed to <%= activity.activitiable.status.upcase %>
+                </div>
+              </div>
+            </div>
+            <% end %>
+          </div>
+          <% if activity.comment? %>
+            <small class="text-muted">Answers</small><br />
+            <% activity.activitiable.comments.each do |c| %>
+              <div class="d-flex align-items-start mt-1">
+                <strong><%= c.user.display_name %></strong>
+                <div class="flex-grow-1">
+                  <div class="border text-sm text-muted p-2 mt-1">
+                    <%= c.text %>
+                  </div>
+                </div>
+              </div>
+            <% end %>
+            <div class="d-flex align-items-start">
+              <%= render partial: 'comment_form', locals: { project: @project, comment: @project.comments.new(comment: activity.activitiable) } %>
+            </div>
+          <% end %>
+          <hr />
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

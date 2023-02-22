@@ -7,7 +7,7 @@ Alex: Which types of authentication should be implemented? Password-based, multi
 Sayinthen: Password-based will be enough.
 
 Alex: Should user to be able modify his data?
-Sayinthen: Yes, user should be able to change his nickname and avatar.
+Sayinthen: Yes, user should be able to change his nickname.
 
 Alex: Ok, lets move to projects and comments..
 Sayinthen: Oh yeah!
@@ -31,11 +31,6 @@ Alex: Should we categorize our projects?
 Sayinthen: No, it's not needed.
 
 Alex: Ok, and last portion of questions..
-Alex: What about emails? Should user receive an emails about answers to theirs comments?
-Sayinthen: Yes, emails should be sent in the next cases:
- 1.To project author - if any comment was added to this project
- 2.To comment author - if any comment was added to his comment
-
 Alex: Do we have some hardware requirements or budget and time limits?
 Sayinthen: It should be aligned with our stack that we use in our other projects - Rails, PostgreSQL, Redis
 Deadline of this project is 3 hours so budget is unlimited we need to hurry up!
