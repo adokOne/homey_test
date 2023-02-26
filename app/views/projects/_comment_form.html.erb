@@ -1,14 +1,10 @@
-<div class="card flex-fill">
-  <div class="card-body">
-    <%= form_for([project, comment]) do |f| %>
-    <%= f.hidden_field :comment_id %>
-    <div class="mb-3">
-      <%= f.label 'Add your comment', class:'form-label' %>
-      <%= f.text_area :text, class: 'form-control', required: true %>
-    </div>
-    <div class="mb-3">
-      <%= f.submit 'Send', class: 'btn btn-primary'%>
-    </div>
-    <% end%>
-  </div>
+<%= form_for([project, comment]) do |f| %>
+<%= f.hidden_field :comment_id %>
+<div class="mb-3">
+  <%= f.label 'Add your comment', class:'form-label' %>
+  <%= f.text_area :text, class: 'form-control', required: true %>
 </div>
+<div class="mb-3">
+  <%= f.submit 'Send', class: 'btn btn-primary'%>
+</div>
+<% end%>

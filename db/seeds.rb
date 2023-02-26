@@ -7,8 +7,8 @@
 #   Character.create(name: "Luke", movie: movies.first)
 
 if User.count.zero?
-  ROLES_TO_ADD = %w[admin moderator]
-  TEST_PASSWORD = 'password'
+  ROLES_TO_ADD = %w[admin moderator].freeze
+  TEST_PASSWORD = 'password'.freeze
 
   admin = User.find_or_initialize_by(email: 'admin@example.com')
   admin.password = TEST_PASSWORD
@@ -18,5 +18,5 @@ if User.count.zero?
   ROLES_TO_ADD.each do |role_name|
     Role.find_or_initialize_by(name: role_name).save!
     admin.add_role(role_name)
-  end  
+  end
 end

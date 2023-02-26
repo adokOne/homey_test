@@ -7,6 +7,6 @@ class StatusChange < ApplicationRecord
     created: STATUS_CREATED,
     approved: STATUS_APPROVED,
     in_progress: STATUS_IN_PROGRESS,
-    completed: STATUS_COMPLETED,
+    completed: STATUS_COMPLETED
   }
 end

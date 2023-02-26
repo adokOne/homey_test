@@ -1,8 +1,8 @@
 FactoryBot.define do
   factory :project do
-    name { "MyString" }
-    description { "MyText" }
+    name { 'MyString' }
+    description { 'MyText' }
     status { 1 }
-    user { nil }
+    user
   end
 end

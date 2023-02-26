@@ -25,7 +25,11 @@
 <%  end%>
 <div class="row">
   <div class="col-md-12 col-xl-12">
-    <%= render partial: 'comment_form', locals: { project: @project, comment: @project.comments.new } %>
+    <div class="card flex-fill">
+      <div class="card-body">
+        <%= render partial: 'comment_form', locals: { project: @project, comment: @project.comments.new } %>
+      </div>
+    </div>
   </div>
 </div>
 
@@ -37,47 +41,10 @@
       </div>
       <div class="card-body h-100">
         <% @project.activities.each do |activity| %>
-          <div class="d-flex align-items-start">
-            <div class="flex-grow-1">
-              <strong><%= activity.activitiable.user.display_name%></strong><br />
-              <small class="text-muted"><%= activity.created_at.strftime('%F %H:%I')%></small><br />
-              <% if activity.comment? && policy(:comment).destroy? %>
-              <%= link_to 'Delete', project_comment_path(@project, activity.activitiable), data: { "turbo-method": :delete }, class: 'btn btn-danger' %>
-              <% end %>
-            </div>
-            <% if activity.comment? %>
-            <div class="d-flex align-items-start mt-1">
-              <div class="flex-grow-1">
-                <div class="border text-sm text-muted p-2 mt-1">
-                  <%= activity.activitiable.text %>
-                </div>
-              </div>
-            </div>
-            <% else %>
-            <div class="d-flex align-items-start mt-1">
-              <div class="flex-grow-1">
-                <div class="border text-sm text-muted p-2 mt-1 btn btn-<%= status_cls(activity.activitiable.status) %>">
-                  Status was changed to <%= activity.activitiable.status.upcase %>
-                </div>
-              </div>
-            </div>
-            <% end %>
-          </div>
-          <% if activity.comment? %>
-            <small class="text-muted">Answers</small><br />
-            <% activity.activitiable.comments.each do |c| %>
-              <div class="d-flex align-items-start mt-1">
-                <strong><%= c.user.display_name %></strong>
-                <div class="flex-grow-1">
-                  <div class="border text-sm text-muted p-2 mt-1">
-                    <%= c.text %>
-                  </div>
-                </div>
-              </div>
-            <% end %>
-            <div class="d-flex align-items-start">
-              <%= render partial: 'comment_form', locals: { project: @project, comment: @project.comments.new(comment: activity.activitiable) } %>
-            </div>
+          <% if lookup_context.exists?(activity.activitiable_type.underscore, ['projects/activities'], true) %>
+            <%= render partial: "projects/activities/#{activity.activitiable_type.underscore}", locals: { activitiable: activity.activitiable, project: @project } %>
+          <% else %>
+            Unknown activity
           <% end %>
           <hr />
         <% end %>

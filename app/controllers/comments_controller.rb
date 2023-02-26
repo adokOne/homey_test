@@ -4,19 +4,19 @@ class CommentsController < ApplicationController
 
   def create
     authorize Comment
-    if current_user.comments.create!(permitted_attributes.merge(project: @project))
-      redirect_to project_path(@project), notice: 'Comment was successfully created.'
+    if current_user.comments.create(permitted_attributes.merge(project: @project)).persisted?
+      redirect_to project_path(@project), notice: t('.notice')
     else
-      render :new, status: :unprocessable_entity
+      redirect_to project_path(@project), status: :unprocessable_entity, alert: t('.alert')
     end
   end
 
   def destroy
     options =
       if @comment.destroy
-        { notice: "Comment was successfully destroyed." }
+        { notice: t('.notice') }
       else
-        { alert: "Comment can not be destroyed." }
+        { alert: t('.alert') }
       end
     redirect_to project_path(@project), **options
   end

@@ -1,0 +1,6 @@
+<div class="d-flex align-items-start">
+  <div class="flex-grow-1">
+    <strong><%= activitiable.user.display_name%></strong> changed project status to <span class="btn btn-<%= status_cls(activitiable.status) %>"><%= activitiable.status.upcase %> </span><br>
+    <small class="text-muted"><%= activitiable.created_at.strftime('%F %H:%I')%></small>
+  </div>
+</div>

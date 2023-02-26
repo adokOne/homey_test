@@ -8,10 +8,10 @@ class UserPolicy < ApplicationPolicy
   end
 
   def update?
-    index? || record.id == user.id
+    user.has_role?(:admin) || record.id == user.id
   end
 
   def destroy?
-    index? #&& record.id != user.id
+    user.has_role?(:admin)
   end
 end

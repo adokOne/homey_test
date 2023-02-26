@@ -31,3 +31,16 @@
 
 en:
   hello: "Hello world"
+  not_authorized: You are not authorized to perform this action.
+  modules:
+    users: Users
+    projects: Projects
+  commnets:
+    notice: Success.
+    alert: Something went wrong
+  projects:
+    notice: Success.
+    alert: Something went wrong
+  users:
+    notice: Success.
+    alert: Something went wrong

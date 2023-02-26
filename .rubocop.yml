@@ -1,0 +1,18 @@
+require: rubocop-rails
+AllCops:
+  NewCops: enable
+  TargetRailsVersion: 7.0.4
+  TargetRubyVersion: 3.2.0
+  Exclude:
+    - 'log/**/*'
+    - 'tmp/**/*'
+    - 'db/**/*'
+    - 'bin/*'
+    - 'vendor/**/*'
+    - 'config/**/*'
+Style/FrozenStringLiteralComment:
+  Enabled: false
+Style/Documentation:
+  Enabled: false
+Metrics/BlockLength:
+  Max: 100

@@ -4,7 +4,7 @@ Rails.application.routes.draw do
 
   # Defines the root path route ("/")
   # root "articles#index"
-  root to: "projects#index"
+  root to: 'projects#index'
   resources :projects do
     post 'change/:status', as: :change_status, to: 'projects#change_status', on: :member
     resources :comments

@@ -1,0 +1,20 @@
+<div class="d-flex align-items-start">
+  <div class="flex-grow-1">
+    <strong><%= activitiable.user.display_name%></strong> posted comment<br>
+    <small class="text-muted"><%= activitiable.created_at.strftime('%F %H:%I')%></small>
+
+    <div class="border text-sm text-muted p-2 mt-1">
+      <%= activitiable.text %>
+    </div>
+
+    <% if policy(:comment).destroy? %>
+      <%= link_to 'Delete', project_comment_path(project, activitiable), data: { "turbo-method": :delete }, class: 'btn btn-sm btn-danger mt-1' %>
+    <% end %>
+    <%= render partial: 'comment_form', locals: { project: project, comment: project.comments.new(comment: activitiable) } %>
+    <div class="mt-1 ms-5">
+      <% activitiable.comments.each do |c| %>
+        <%= render partial: "projects/activities/comment", locals: { activitiable: c, project: project } %>
+      <% end %>
+    </div>
+  </div>
+</div>

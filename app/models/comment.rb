@@ -13,4 +13,3 @@ class Comment < ApplicationRecord
     comment.nil?
   end
 end
-

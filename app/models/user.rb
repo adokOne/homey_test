@@ -6,7 +6,9 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable
 
   has_many :projects, dependent: :destroy
-  has_many :comments
+  has_many :comments, dependent: :destroy
+
+  validates :name, presence: true, on: :update
 
   def display_name
     name.presence || email

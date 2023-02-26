@@ -1,9 +1,7 @@
 module ApplicationHelper
   def allowed_modules
-    return [] unless current_user
-
-    modules = [projects_path]
-    modules << users_path if policy(:user).index?
+    modules = [{ title: t('modules.projects'), path: projects_path }]
+    modules << { title: t('modules.users'), path: users_path } if policy(:user).index?
     modules
   end
 
@@ -18,5 +16,9 @@ module ApplicationHelper
     else
       'success'
     end
+  end
+
+  def module_is_active?(path)
+    request.path =~ /#{path}/
   end
 end
